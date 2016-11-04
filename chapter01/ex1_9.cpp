@@ -2,14 +2,16 @@
 
 using namespace std;
 
-int main(){
-    int i=50;
+int main()
+{
+    int i = 50;
     int sum = 0;
-    while(i<=100){
-        sum+=i;
+    while (i <= 100)
+    {
+        sum += i;
         i++;
-     }
-     cout<<sum<<endl;
+    }
+    cout << sum << endl;
 
     return 0;
 }

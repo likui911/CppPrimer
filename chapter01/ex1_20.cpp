@@ -6,11 +6,10 @@ using namespace std;
 int main()
 {
     Sales_item item;
-    while(cin>>item)
+    while (cin >> item)
     {
-        cout<<item<<endl;
+        cout << item << endl;
     }
-
 
     return 0;
 }
