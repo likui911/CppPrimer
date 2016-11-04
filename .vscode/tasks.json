@@ -1,7 +1,7 @@
 {
     "version": "0.1.0",
     "command": "g++",
-    "args": ["-g","${file}","-o","${file}.exe"],
+    "args": ["-g","${file}","-o","${workspaceRoot}\\build\\${fileBasename}.exe"],
     "problemMatcher": {
         "owner": "cpp",
         "fileLocation": ["relative", "${workspaceRoot}"],
