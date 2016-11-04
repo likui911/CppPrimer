@@ -9,7 +9,7 @@
             "program": "${workspaceRoot}\\build\\${fileBasename}.exe",                   
             "miDebuggerPath":"c:\\MinGW\\bin\\gdb.exe", 
             "args": [],     
-            "stopAtEntry": false,                       
+            "stopAtEntry": false,                  
             "cwd": "${workspaceRoot}",                  
             "externalConsole": true,                  
             "preLaunchTask": "g++"　　                  
