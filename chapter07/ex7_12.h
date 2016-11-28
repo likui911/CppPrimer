@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 
-#ifndef EX7_11_H
-#define EX7_11_H
+#ifndef EX7_12_H
+#define EX7_12_H
 
 struct Sales_data;
 std::istream &read(std::istream &is, Sales_data &item);
