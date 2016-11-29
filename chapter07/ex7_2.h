@@ -13,7 +13,6 @@ struct Sales_data
     unsigned unit_solds = 0;
     double revenue = 0;
 };
-#include "ex7_2.h"
 
 std::string Sales_data::isbn() const
 {

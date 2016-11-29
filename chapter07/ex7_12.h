@@ -19,7 +19,7 @@ struct Sales_data
 
     std::string bookNo;
     unsigned unit_solds = 0;
-    double revenue = 0; 
+    double revenue = 0;
 };
 
 Sales_data &Sales_data::combine(Sales_data &rhs)
