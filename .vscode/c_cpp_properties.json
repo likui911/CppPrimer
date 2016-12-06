@@ -18,8 +18,8 @@
         },
         {
             "name": "Win32",
-            "includePath": ["C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include"],
-            "browse" : {
+           "includePath": ["C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.10.24629/include"],
+           "browse" : {
                 "limitSymbolsToIncludedHeaders" : true,
                 "databaseFilename" : ""
             }
