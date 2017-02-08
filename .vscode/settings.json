@@ -58,6 +58,10 @@
     ],
 
     // Complete macros
-    "clang.completion.completeMacros": true
-
+    "clang.completion.completeMacros": true,
+    "files.associations": {
+        "xlocale": "cpp",
+        "*h*h*h*hxutility": "cpp",
+        "xmemory0": "cpp"
+    }
 }
