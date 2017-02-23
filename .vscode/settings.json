@@ -62,6 +62,7 @@
     "files.associations": {
         "xlocale": "cpp",
         "*h*h*h*hxutility": "cpp",
-        "xmemory0": "cpp"
+        "xmemory0": "cpp",
+        "iostream": "cpp"
     }
 }
