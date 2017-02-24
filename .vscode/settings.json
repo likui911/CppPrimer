@@ -63,6 +63,8 @@
         "xlocale": "cpp",
         "*h*h*h*hxutility": "cpp",
         "xmemory0": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "string": "cpp",
+        "fstream": "cpp"
     }
 }

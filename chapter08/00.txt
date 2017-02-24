@@ -1,0 +1,4 @@
+Each iteration constructs a new ifstream object named input and opens it to read
+the given file. As usual, we check that the open succeeded. If so, we pass that file to
+a function that will read and process the input. If not, we print an error message
+and continue.
