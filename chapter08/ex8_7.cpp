@@ -3,13 +3,15 @@
 
 #include "../chapter07/ex7_26.h"
 using std::ifstream;
+using std::ofstream;
 using std::cout;
 using std::endl;
 using std::cerr;
 
 int main(int argc, char **argv)
 {
-    ifstream input(argv[1]);
+    ifstream input(argv[1]);  //输入文件
+    ofstream output(argv[2]); //输出文件
 
     Sales_data total;
     if (read(input, total))
@@ -21,16 +23,17 @@ int main(int argc, char **argv)
                 total.combine(trans);
             else
             {
-                print(cout, total) << endl;
+                print(output, total) << endl;
                 total = trans;
             }
         }
-        print(cout, total) << endl;
+        print(output, total) << endl;
     }
     else
     {
         cerr << "No data?!" << endl;
     }
     input.close();
+    output.close();
     return 0;
 }

@@ -29,35 +29,35 @@ std::ostream &print(std::ostream &os, Sales_data &sl)
     return os;
 }
 
-int main()
-{
-    Sales_data total;
-    std::istream &is = std::cin;
-    if (is)
-    {
-        total = Sales_data(is);
-        std::istream &is = std::cin;
-        Sales_data trans;
-        while (is)
-        {
-            trans = Sales_data(is);
-            if (trans.isbn() == total.isbn())
-            {
-                total.combine(trans);
-            }
-            else
-            {
-                print(std::cout, total);
-                total = trans;
-            }
-        }
-        print(std::cout, total);
-    }
-    else
-    {
-        std::cerr << "No Data?" << std::endl;
-        return -1;
-    }
+// int main()
+// {
+//     Sales_data total;
+//     std::istream &is = std::cin;
+//     if (is)
+//     {
+//         total = Sales_data(is);
+//         std::istream &is = std::cin;
+//         Sales_data trans;
+//         while (is)
+//         {
+//             trans = Sales_data(is);
+//             if (trans.isbn() == total.isbn())
+//             {
+//                 total.combine(trans);
+//             }
+//             else
+//             {
+//                 print(std::cout, total);
+//                 total = trans;
+//             }
+//         }
+//         print(std::cout, total);
+//     }
+//     else
+//     {
+//         std::cerr << "No Data?" << std::endl;
+//         return -1;
+//     }
 
-    return 0;
-}
+//     return 0;
+// }
