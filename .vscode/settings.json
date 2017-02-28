@@ -65,6 +65,7 @@
         "xmemory0": "cpp",
         "iostream": "cpp",
         "string": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "sstream": "cpp"
     }
 }
