@@ -69,6 +69,10 @@
         "sstream": "cpp",
         "xstring": "cpp",
         "xutility": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "ostream": "cpp",
+        "iterator": "cpp",
+        "deque": "cpp",
+        "list": "cpp"
     }
 }

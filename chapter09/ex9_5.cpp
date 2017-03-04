@@ -5,13 +5,15 @@ using namespace std;
 
 typedef vector<int>::iterator iter;
 
-bool find(iter begin, iter end, int inc)
+iter find(iter begin, iter end, int inc)
 {
     while (begin != end)
     {
         if (*begin == inc)
-            return true;
+            //如果找到了，返回当前的iter
+            return begin;
         begin++;
     }
-    return false;
+    //如果未找到，返回end
+    return end;
 }
