@@ -73,6 +73,7 @@
         "ostream": "cpp",
         "iterator": "cpp",
         "deque": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "forward_list": "cpp"
     }
 }
