@@ -7,7 +7,7 @@
             "request": "launch",                        
             "targetArchitecture": "x86",                
             "program": "${workspaceRoot}\\build\\${fileBasename}.exe",                   
-            "miDebuggerPath":"C:\\mingw-w64\\mingw64\\bin\\gdb.exe", 
+            "miDebuggerPath":"C:\\mingw-w64\\bin\\gdb.exe", 
             "args": [],     
             "stopAtEntry": false,                  
             "cwd": "${workspaceRoot}",                  
