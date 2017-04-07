@@ -76,6 +76,8 @@
         "list": "cpp",
         "forward_list": "cpp",
         "algorithm": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "xiosbase": "cpp",
+        "memory": "cpp"
     }
 }
