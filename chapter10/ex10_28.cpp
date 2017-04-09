@@ -19,7 +19,6 @@ int main()
     vector<int> v1{};
     list<int> v2{};
     vector<int> v3{};
-    mtx.lock();
     // 1,2,3,4,5,6,7,8,9
     copy(vi.begin(), vi.end(), back_inserter(v1));
     //9,8,7,6,5,4,3,2,1
@@ -40,6 +39,5 @@ int main()
     {
         cout << i << " ";
     }
-    
     return 0;
 }
