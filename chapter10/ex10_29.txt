@@ -1,0 +1,13 @@
+Istream 
+iterators 
+are 
+input 
+iterators 
+that 
+read 
+successive 
+elements 
+from 
+an 
+input 
+stream 
