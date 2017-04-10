@@ -78,6 +78,7 @@
         "algorithm": "cpp",
         "iosfwd": "cpp",
         "xiosbase": "cpp",
-        "memory": "cpp"
+        "memory": "cpp",
+        "functional": "cpp"
     }
 }
