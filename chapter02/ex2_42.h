@@ -1,7 +1,7 @@
 #ifndef SALES_DATA_H
 #define SALES_DATA_H
 
-#include <string.h>
+#include <string>
 #include <iostream>
 
 struct Sales_data {
