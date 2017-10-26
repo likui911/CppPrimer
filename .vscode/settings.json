@@ -112,6 +112,10 @@
         "xtr1common": "cpp",
         "xtree": "cpp",
         "cctype": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "array": "cpp",
+        "*.tcc": "cpp",
+        "clocale": "cpp",
+        "cwctype": "cpp"
     }
 }
