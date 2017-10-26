@@ -9,24 +9,27 @@ is not in the map.
 #include <iostream>
 using namespace std;
 
-typedef std::string Author;
-typedef std::string Work;
 int main()
 {
-    multimap<Author, Work> aw;
-    aw.insert(make_pair("james", "look"));
-    aw.insert(make_pair("james", "fish"));
-    aw.insert(make_pair("james", "cooking"));
-    aw.insert(make_pair("jack", "fish"));
+    multimap<string, string> authors{
+        {"alan", "DMA"},
+        {"pezy", "LeetCode"},
+        {"alan", "CLRS"},
+        {"wang", "FTP"},
+        {"pezy", "CP5"},
+        {"wang", "CPP-Concurrency"},
+        {"pezy", "CP5"}};
 
-    multimap<Author, Work>::iterator iter = aw.find("likui");
-    if (iter == aw.end())
+    string author{"likui"};
+    string work{"Cpp"};
+
+    for (auto found = authors.find(author);
+         found != authors.end() && found->first == author; ++found)
     {
-        cout << "not exist" << endl;
-    }
-    else
-    {
-        aw.erase(iter);
+        if (found->second == work)
+        {
+            authors.erase(found);
+        }
     }
     return 0;
 }
