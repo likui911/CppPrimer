@@ -23,12 +23,28 @@ then the program should generate the following output:
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <iterator>
 
 using namespace std;
 
 const string &transform(const string &s, const map<string, string> &m)
 {
-    //Todo
+    stringstream ss{s};
+    string word;
+    bool isBegin = true;
+    while (ss >> word)
+    {
+        if (isBegin)
+            isBegin = false;
+        else
+            cout << " ";
+
+        auto iter = m.find(word);
+        if (iter != m.end())
+            cout << iter->second;
+        else
+            cout << word;
+    }
 }
 
 int main()
