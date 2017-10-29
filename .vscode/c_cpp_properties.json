@@ -3,14 +3,34 @@
         {
             "name": "Win32",
             "includePath": [
-                "C:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++"
+                "${workspaceRoot}",
+                "C:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0",
+                "C:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/*",
+                "C:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include",
+                "C:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/*",
+                "C:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++",
+                "C:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++/*",
+                "c:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++/tr1",
+                "c:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++/tr1/*",
+                "c:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++/x86_64-w64-mingw32",
+                "c:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++/x86_64-w64-mingw32/*"
+                
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": "",
                 "path": [
+                    "${workspaceRoot}",
+                    "C:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0",
+                    "C:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/*",
+                    "C:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include",
+                    "C:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/*",
                     "C:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++",
-                    "${workspaceRoot}"
+                    "C:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++/*",
+                    "c:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++/tr1",
+                    "c:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++/tr1/*",
+                    "c:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++/x86_64-w64-mingw32",
+                    "c:/mingw-w64/lib/gcc/x86_64-w64-mingw32/6.3.0/include/c++/x86_64-w64-mingw32/*"    
                 ]
             },
             "intelliSenseMode": "msvc-x64"
