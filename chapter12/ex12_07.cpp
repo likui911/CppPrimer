@@ -7,7 +7,7 @@ appropriate time.
 */
 
 #include <vector>
-#include <iostream>
+#include<iostream>
 #include <memory>
 using namespace std;
 
