@@ -1,12 +1,13 @@
 /*
-Define your own version of StrBlobPtr and update your
-StrBlob class with the appropriate friend declaration and begin and end
-members.
+What changes would need to be made to StrBlobPtr to
+create a class that can be used with a const StrBlob? Define a class
+named ConstStrBlobPtr that can point to a const StrBlob.
 */
 #include <string>
 #include <memory>
 #include <vector>
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 class StrBlobPtr;
@@ -26,8 +27,14 @@ class StrBlob
     // add and remove elements
     void push_back(const std::string &t) { data->push_back(t); }
     void pop_back() { data->pop_back(); }
+
+    void push_back(const std::string &t)const { data->push_back(t); }
+    void pop_back()const { data->pop_back(); }
+    
     StrBlobPtr begin();
     StrBlobPtr end();
+    StrBlobPtr begin() const;
+    StrBlobPtr end() const;
     // element access
     std::string &front() { return data->front(); }
     std::string &back() { return data->back(); }
@@ -43,7 +50,7 @@ class StrBlobPtr
 {
   public:
     StrBlobPtr() : curr(0) {}
-    StrBlobPtr(StrBlob &a, size_t sz = 0) : wptr(a.data), curr(sz) {}
+    StrBlobPtr(const StrBlob &a, size_t sz = 0) : wptr(a.data), curr(sz) {}
     bool operator!=(const StrBlobPtr &p) { return p.curr != curr; }
     std::string &deref() const;
     StrBlobPtr &incr(); // prefix version
@@ -74,6 +81,16 @@ StrBlobPtr StrBlob::end()
     return StrBlobPtr(*this, data->size());
 }
 
+StrBlobPtr StrBlob::begin() const
+{
+    return StrBlobPtr(*this);
+}
+
+StrBlobPtr StrBlob::end() const
+{
+    return StrBlobPtr(*this, data->size());
+}
+
 ////////////////implement of class StrBlobPtr///////////////////////
 
 std::shared_ptr<std::vector<std::string>>
@@ -84,7 +101,7 @@ StrBlobPtr::check(std::size_t i, const std::string &msg) const
         throw runtime_error("unbound strBlobPtr");
 
     if (i > ret->size())
-        throw out_of_range(msg);    
+        throw out_of_range(msg);
 
     return ret;
 }
@@ -103,14 +120,17 @@ StrBlobPtr &StrBlobPtr::incr()
 
 int main()
 {
-    StrBlobPtr blob_ptr;
+    const StrBlob blob;
+    ifstream ifs("./chapter12/ex12_20.cpp");
+    string s;
+    while (getline(ifs, s))
     {
-        StrBlob blob2{"i love you ", "love", "you", "china", "for", "ever"};
-        blob_ptr = blob2.begin();
-        //output "i lovw you"
-        cout << blob_ptr.deref() << endl;
+        blob.push_back(s);
     }
-    //throw runtime_error
-    //cout << blob_ptr.deref() << endl;
+
+    for (StrBlobPtr ptr = blob.begin(); ptr != blob.end(); ptr.incr())
+    {
+        cout << ptr.deref() << endl;
+    }
     return 0;
 }

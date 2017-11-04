@@ -1,12 +1,12 @@
 /*
-Define your own version of StrBlobPtr and update your
-StrBlob class with the appropriate friend declaration and begin and end
-members.
+Write a program that reads an input file a line at a time
+into a StrBlob and uses a StrBlobPtr to print each element in that StrBlob.
 */
 #include <string>
 #include <memory>
 #include <vector>
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 class StrBlobPtr;
@@ -84,7 +84,7 @@ StrBlobPtr::check(std::size_t i, const std::string &msg) const
         throw runtime_error("unbound strBlobPtr");
 
     if (i > ret->size())
-        throw out_of_range(msg);    
+        throw out_of_range(msg);
 
     return ret;
 }
@@ -103,14 +103,17 @@ StrBlobPtr &StrBlobPtr::incr()
 
 int main()
 {
-    StrBlobPtr blob_ptr;
+    StrBlob blob;
+    ifstream ifs("./chapter12/ex12_20.cpp");
+    string s;
+    while (getline(ifs, s))
     {
-        StrBlob blob2{"i love you ", "love", "you", "china", "for", "ever"};
-        blob_ptr = blob2.begin();
-        //output "i lovw you"
-        cout << blob_ptr.deref() << endl;
+        blob.push_back(s);
     }
-    //throw runtime_error
-    //cout << blob_ptr.deref() << endl;
+
+    for (StrBlobPtr ptr = blob.begin(); ptr != blob.end(); ptr.incr())
+    {
+        cout << ptr.deref() << endl;
+    }
     return 0;
 }
