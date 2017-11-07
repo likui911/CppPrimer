@@ -26,7 +26,7 @@ class StrBlob
 
     StrBlob &operator=(const StrBlob &rhs)
     {
-        data = std::make_shared<vector<string>>(*sb.data);
+        data = std::make_shared<vector<string>>(*rhs.data);
         return *this;
     }
 
