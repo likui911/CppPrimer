@@ -50,6 +50,7 @@ int main()
 {
     HasPtr p1("kui", 2);
     HasPtr p2("li", 1);
+    //todo
     if(p2<p1)
     {
         cout<<"true"<<endl;
