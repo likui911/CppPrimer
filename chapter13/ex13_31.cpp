@@ -12,6 +12,7 @@ class HasPtr
 {
   public:
     friend void swap(HasPtr &lhs, HasPtr &rhs);
+    friend bool operator<(const HasPtr &lhs, const HasPtr &rhs);
     friend ostream &operator<<(ostream &os, const HasPtr &ptr);
 
     HasPtr(const std::string &s = std::string()) : ps(new std::string(s)), i(0) {}
@@ -22,10 +23,6 @@ class HasPtr
         i = p.i;
         ps = p.ps;
         p.ps = nullptr;
-    }
-    bool operator<(const HasPtr &p) const
-    {
-        return this->i < p.i;
     }
 
     HasPtr &operator=(HasPtr rhs)
@@ -47,10 +44,15 @@ inline void swap(HasPtr &lhs, HasPtr &rhs)
     swap(lhs.i, rhs.i);
 }
 
-ostream &operator<<(ostream &os, const HasPtr &ptr)
+inline ostream &operator<<(ostream &os, const HasPtr &ptr)
 {
     cout << *ptr.ps << " - " << ptr.i;
     return os;
+}
+
+inline bool operator<(const HasPtr &lhs, const HasPtr &rhs)
+{
+    return lhs.i < rhs.i;
 }
 
 int main()
