@@ -135,7 +135,6 @@ int main()
     {
         blob.push_back(s);
     }
-    
     const StrBlob blob1(blob);
 
     for (StrBlobPtr ptr = blob.begin(); ptr != blob.end(); ptr.incr())

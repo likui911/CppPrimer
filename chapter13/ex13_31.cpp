@@ -4,12 +4,16 @@ Give your swap a print statement that notes when it is executed
 */
 #include <string>
 #include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
 class HasPtr
 {
   public:
     friend void swap(HasPtr &lhs, HasPtr &rhs);
+    friend ostream &operator<<(ostream &os, const HasPtr &ptr);
+
     HasPtr(const std::string &s = std::string()) : ps(new std::string(s)), i(0) {}
     HasPtr(const std::string &s, int d) : ps(new std::string(s)), i(d) {}
     HasPtr(const HasPtr &p) : ps(new std::string(*p.ps)), i(p.i) {}
@@ -24,12 +28,9 @@ class HasPtr
         return this->i < p.i;
     }
 
-    HasPtr &operator=(const HasPtr &p)
+    HasPtr &operator=(HasPtr rhs)
     {
-        auto nps = new string(*p.ps);
-        delete ps;
-        ps = nps;
-        i = p.i;
+        swap(*this, rhs);
         return *this;
     }
     ~HasPtr() { delete ps; }
@@ -46,14 +47,26 @@ inline void swap(HasPtr &lhs, HasPtr &rhs)
     swap(lhs.i, rhs.i);
 }
 
+ostream &operator<<(ostream &os, const HasPtr &ptr)
+{
+    cout << *ptr.ps << " - " << ptr.i;
+    return os;
+}
+
 int main()
 {
     HasPtr p1("kui", 2);
     HasPtr p2("li", 1);
-    //todo
-    if(p2<p1)
+
+    vector<HasPtr> vec;
+    vec.push_back(p1);
+    vec.push_back(p2);
+
+    //sort the HasPtr's vector,it will invoke the swap function
+    sort(vec.begin(), vec.end());
+    for (auto p : vec)
     {
-        cout<<"true"<<endl;
+        cout << p << endl;
     }
     return 0;
 }
