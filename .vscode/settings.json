@@ -14,14 +14,10 @@
     // If set, overrides the include sorting behavior determined by the SortIncludes parameter.
     "C_Cpp.clang_format_sortIncludes": false,
 
-    // Enable clang-format on save.
-    "C_Cpp.clang_format_formatOnSave": false,
-
     // Controls auto completion for C/C++ code. 'Default' uses an experimental recursive directory tag parser (as of right now). 'Disabled' uses the word based completion provided by Visual Studio Code.
     "C_Cpp.autocomplete": "Default",
 
-
-// Clang configulation
+    "C_Cpp.intelliSenseEngine": "Default",
 
     // Clang command or the path to the Clang executable
     "clang.executable": "clang",

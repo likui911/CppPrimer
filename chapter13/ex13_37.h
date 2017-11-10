@@ -1,5 +1,6 @@
 #include <string>
 #include <set>
+#include <algorithm>
 
 #ifndef EX13_37_H
 #define EX13_37_H
@@ -9,6 +10,7 @@ class Message
 {
   public:
     friend class Folder;
+    friend void swap(Message &lhs, Message &rhs);
     // folders is implicitly initialized to the empty set
     explicit Message(const std::string &str = "") : contents(str) {}
     // copy control to manage pointers to this Message
@@ -33,10 +35,16 @@ class Folder
 {
     friend class Message;
 
-    //public:
-  private:
+  public:
+    Folder() = default;
+    Folder(Folder &f) = delete; //folder is unique
+    Folder &operator=(const Folder &f) = delete;
     void addMsg(Message *);
     void remMsg(Message *);
+
+  private:
+    void add_to_messages(Folder *f);
+    void remove_from_messages();
 
     std::set<Message *> messages;
 };
