@@ -44,6 +44,8 @@ class SString
 
     SString &operator=(const SString &rhs)
     {
+        if (&rhs == this)
+            return *this;
         //先拷贝rhs的内容
         size_t len = rhs.len_;
         char *p = new char[len + 1];
