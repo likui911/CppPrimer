@@ -8,6 +8,7 @@
 #include <memory>
 #include <initializer_list>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -65,7 +66,7 @@ StrVec &StrVec::operator=(const StrVec &rhs)
 
 void StrVec::reallocate()
 {
-    auto newCapcity = size() ? 2 * size() : 1;
+    auto newCapcity = size() ? 2 * size() : 8;
     string *newData = alloc.allocate(newCapcity);
     string *dest = newData;
     string *elem = elements;
@@ -87,14 +88,17 @@ pair<string *, string *> StrVec::alloc_n_copy(const string *b, const string *e)
 
 void StrVec::free()
 {
-    if (elements)
-    {
-        for (auto p = first_free; p != elements;)
-        {
-            alloc.destroy(--p);
-        }
-        alloc.deallocate(elements, cap - elements);
-    }
+    //Exercise 13.43 Rewrite the free member to use for_each and a lambda
+    for_each(elements, first_free, [this](std::string &rhs) { alloc.destroy(&rhs); });
+    alloc.deallocate(elements, cap - elements);
+    // if (elements)
+    // {
+    //     for (auto p = first_free; p != elements;)
+    //     {
+    //         alloc.destroy(--p);
+    //     }
+    //     alloc.deallocate(elements, cap - elements);
+    // }
 }
 
 void StrVec::push_back(const string &str)
@@ -106,11 +110,14 @@ void StrVec::push_back(const string &str)
 int main()
 {
 
-    StrVec v{"1", "2", "3", "4", "5", "6", "7"};
-    v.push_back("8");
-    for (auto s : v)
     {
-        cout << s << endl;
+        StrVec v{"1", "2", "3", "4", "5", "6", "7"};
     }
+
+    // v.push_back("8");
+    // for (auto s : v)
+    // {
+    //     cout << s << endl;
+    // }
     return 0;
 }
