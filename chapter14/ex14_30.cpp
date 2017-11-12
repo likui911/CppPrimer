@@ -53,6 +53,8 @@ class StrBlobPtr
     StrBlobPtr() : curr(0) {}
     StrBlobPtr(const StrBlob &s, size_t sz = 0) : wptr(s.data), curr(sz) {}
     string &operator*() const;
+    //operator->必须返回类的指针或者是重载了operator->的对象
+    string *operator->() const { return &operator*(); }
     string &operator[](size_t n);
     const string &operator[](size_t n) const;
     StrBlobPtr &operator++();
@@ -78,6 +80,7 @@ class ConstStrBlobPtr
     //constStrBlobPtr与StrBlobPtr的区别是
     //该类型只能用于读取容器内的元素，但不能改变其值。
     const string &operator*() const;
+    const string *operator->() const { return &operator*(); }
     const string &operator[](size_t n) const;
     ConstStrBlobPtr operator+(size_t n);
     ConstStrBlobPtr operator-(size_t n);
@@ -325,13 +328,12 @@ ConstStrBlobPtr ConstStrBlobPtr::operator--(int)
 
 int main()
 {
-    const StrBlob sb{"11", "22", "33", "44"};
+    const StrBlob sb{"1", "22", "333", "4444"};
     auto iter = sb.begin();
     for (size_t i = 0; i < 4; ++i)
     {
+        cout << iter->size() << "\t";
         cout << *(iter + i) << endl;
     }
-
-    //todo add arrow operator
     return 0;
 }
