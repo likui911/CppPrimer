@@ -1,7 +1,9 @@
 /*
- Define the addition and compound-assignment operators for your Sales_data class.
+Write the Sales_data operators so that + does the actual
+addition and += calls +. Discuss the disadvantages of this approach
+compared to the way these operators were defined in § 14.3 (p. 560) and
+§ 14.4 (p. 564).
 */
-
 #include <string>
 #include <iostream>
 using namespace std;
@@ -52,14 +54,23 @@ ostream &operator<<(ostream &os, const Sales_data &item)
 
 Sales_data &Sales_data::operator+=(const Sales_data &rhs)
 {
-    unit_solds += rhs.unit_solds;
-    revenue += rhs.revenue;
+    *this = *this + rhs;
     return *this;
 }
 
 Sales_data operator+(const Sales_data &lhs, const Sales_data &rhs)
 {
     Sales_data sum = lhs;
-    sum += rhs;
+    sum.unit_solds = lhs.unit_solds + rhs.unit_solds;
+    sum.revenue = lhs.revenue + rhs.revenue;
     return sum;
+}
+
+int main()
+{
+    Sales_data s1("1", 3, 23);
+    Sales_data s2("1", 4, 23);
+    s1 += s2;
+    cout << s1 << endl;
+    return 0;
 }
