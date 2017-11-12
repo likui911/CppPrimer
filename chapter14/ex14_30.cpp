@@ -7,11 +7,15 @@ must return const references because the data member in constStrBlobPtr points t
 #include <memory>
 #include <iostream >
 using namespace std;
+
 class StrBlobPtr;
+class ConstStrBlobPtr;
+
 class StrBlob
 {
     using size_type = vector<string>::size_type;
     friend class StrBlobPtr;
+    friend class ConstStrBlobPtr;
 
   public:
     StrBlob() : data(make_shared<vector<string>>()) {}
@@ -24,6 +28,8 @@ class StrBlob
     StrBlob &operator=(StrBlob &&) noexcept;
     StrBlobPtr begin();
     StrBlobPtr end();
+    ConstStrBlobPtr begin() const;
+    ConstStrBlobPtr end() const;
     string &operator[](size_t n);
     const string &operator[](size_t n) const;
     size_type size() const { return data->size(); }
@@ -45,19 +51,42 @@ class StrBlobPtr
 {
   public:
     StrBlobPtr() : curr(0) {}
-    StrBlobPtr(StrBlob &s, size_t sz = 0) : wptr(s.data), curr(sz) {}
-    //string &deref() const;
+    StrBlobPtr(const StrBlob &s, size_t sz = 0) : wptr(s.data), curr(sz) {}
     string &operator*() const;
     string &operator[](size_t n);
     const string &operator[](size_t n) const;
-    StrBlobPtr operator++();
+    StrBlobPtr &operator++();
     StrBlobPtr operator++(int);
-    StrBlobPtr operator--();
+    StrBlobPtr &operator--();
     StrBlobPtr operator--(int);
     StrBlobPtr operator+(size_t n);
     StrBlobPtr operator-(size_t n);
     StrBlobPtr &operator+=(size_t n);
     StrBlobPtr &operator-=(size_t n);
+
+  private:
+    shared_ptr<vector<string>> check(size_t, const string &) const;
+    std::weak_ptr<vector<string>> wptr;
+    size_t curr;
+};
+
+class ConstStrBlobPtr
+{
+  public:
+    ConstStrBlobPtr() : curr(0) {}
+    ConstStrBlobPtr(const StrBlob &s, size_t sz = 0) : wptr(s.data), curr(sz) {}
+    //constStrBlobPtr与StrBlobPtr的区别是
+    //该类型只能用于读取容器内的元素，但不能改变其值。
+    const string &operator*() const;
+    const string &operator[](size_t n) const;
+    ConstStrBlobPtr operator+(size_t n);
+    ConstStrBlobPtr operator-(size_t n);
+    ConstStrBlobPtr &operator+=(size_t n);
+    ConstStrBlobPtr &operator-=(size_t n);
+    ConstStrBlobPtr &operator++();
+    ConstStrBlobPtr &operator--();
+    ConstStrBlobPtr operator++(int);
+    ConstStrBlobPtr operator--(int);
 
   private:
     shared_ptr<vector<string>> check(size_t, const string &) const;
@@ -92,6 +121,16 @@ StrBlobPtr StrBlob::begin()
 StrBlobPtr StrBlob::end()
 {
     return StrBlobPtr(*this, data->size());
+}
+
+ConstStrBlobPtr StrBlob::begin() const
+{
+    return ConstStrBlobPtr(*this, 0);
+}
+
+ConstStrBlobPtr StrBlob::end() const
+{
+    return ConstStrBlobPtr(*this, data->size());
 }
 
 string &StrBlob::operator[](size_t n)
@@ -139,7 +178,7 @@ const string &StrBlobPtr::operator[](size_t n) const
     return (*p)[n];
 }
 
-StrBlobPtr StrBlobPtr::operator++()
+StrBlobPtr &StrBlobPtr::operator++()
 {
     check(curr + 1, "prefix increment");
     ++curr;
@@ -153,7 +192,7 @@ StrBlobPtr StrBlobPtr::operator++(int)
     return ret;
 }
 
-StrBlobPtr StrBlobPtr::operator--()
+StrBlobPtr &StrBlobPtr::operator--()
 {
     check(curr - 1, "prefix decrement");
     --curr;
@@ -197,13 +236,102 @@ StrBlobPtr &StrBlobPtr::operator-=(size_t n)
     return *this;
 }
 
+//ConstStrBlobPtr实现
+shared_ptr<vector<string>> ConstStrBlobPtr::check(size_t i, const string &msg) const
+{
+    auto ret = wptr.lock();
+    if (!ret)
+    {
+        throw runtime_error("unbound shared_ptr");
+    }
+    if (i > ret->size())
+    {
+        throw out_of_range(msg);
+    }
+    return ret;
+}
+
+const string &ConstStrBlobPtr::operator*() const
+{
+    auto p = check(curr, "dereference past end");
+    return (*p)[curr];
+}
+
+const string &ConstStrBlobPtr::operator[](size_t n) const
+{
+    auto p = check(n, "dereference n");
+    return (*p)[n];
+}
+
+ConstStrBlobPtr ConstStrBlobPtr::operator+(size_t n)
+{
+    check(curr + n, "operator+");
+    ConstStrBlobPtr ret = *this;
+    ret.curr += n;
+    return ret;
+}
+
+ConstStrBlobPtr ConstStrBlobPtr::operator-(size_t n)
+{
+    check(curr - n, "operator-");
+    ConstStrBlobPtr ret = *this;
+    ret.curr -= n;
+    return ret;
+}
+
+ConstStrBlobPtr &ConstStrBlobPtr::operator+=(size_t n)
+{
+    check(curr + n, "operator+=");
+    curr += n;
+    return *this;
+}
+
+ConstStrBlobPtr &ConstStrBlobPtr::operator-=(size_t n)
+{
+    check(curr + n, "operator-=");
+    curr -= n;
+    return *this;
+}
+
+ConstStrBlobPtr &ConstStrBlobPtr::operator++()
+{
+    check(curr + 1, "operator++");
+    ++curr;
+    return *this;
+}
+
+ConstStrBlobPtr &ConstStrBlobPtr::operator--()
+{
+    check(curr - 1, "operator++");
+    --curr;
+    return *this;
+}
+
+ConstStrBlobPtr ConstStrBlobPtr::operator++(int)
+{
+    check(curr + 1, "operator++");
+    ConstStrBlobPtr ret = *this;
+    ++curr;
+    return ret;
+}
+
+ConstStrBlobPtr ConstStrBlobPtr::operator--(int)
+{
+    check(curr - 1, "operator++");
+    ConstStrBlobPtr ret = *this;
+    --curr;
+    return ret;
+}
+
 int main()
 {
-    StrBlob sb{"11", "22", "33", "44"};
+    const StrBlob sb{"11", "22", "33", "44"};
     auto iter = sb.begin();
     for (size_t i = 0; i < 4; ++i)
     {
         cout << *(iter + i) << endl;
     }
+
+    //todo add arrow operator
     return 0;
 }
