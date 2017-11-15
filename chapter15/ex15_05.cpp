@@ -29,6 +29,7 @@ class BulkQuote : public Quote
   public:
     BulkQuote() = default;
     BulkQuote(const string &book, double p, size_t qty, double disc)
+        //派生类使用基类的构造函数初始化基类的成员函数
         : Quote(book, p), min_qty(qty), discount(disc){};
     double net_price(std::size_t n) const override;
 
