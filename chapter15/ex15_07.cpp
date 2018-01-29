@@ -45,7 +45,8 @@ double LimitQuote::net_price(size_t n) const
 {
     if (n > max_rst)
     {
-        return n * price;
+        //超出的部分按照原价出售
+        return (n - max_rst) * price + max_rst * (1 - discount) * price;
     }
     return (1 - discount) * price * n;
 }
