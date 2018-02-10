@@ -71,6 +71,9 @@ class Bulk_quote : public Disc_quote
 int main()
 {
     Bulk_quote bulk=Bulk_quote("Good",1.2,10,0.2);
+    //cannot declare variable 'disc' to be of abstract type 'Disc_quote'
+    //ex15_17
+    //Disc_quote disc;
     print_total(cout,bulk,5);
     return 0;
 }

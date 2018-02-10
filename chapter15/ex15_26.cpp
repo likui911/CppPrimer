@@ -23,7 +23,7 @@ class Quote
 class Bulk_quote : public Quote
 {
   public:
-    Bulk_quote()
+    Bulk_quote() //:Quote()
     {
         //首先会调用基类Quote的默认构造函数
         cout << "Bulk_quote Constructor" << endl;
@@ -42,10 +42,8 @@ class Bulk_quote : public Quote
 
 int main()
 {
-    {
-        Bulk_quote bulk;
-        Bulk_quote bulk1(bulk);
-    }
+    Bulk_quote bulk;
+    Bulk_quote bulk1(bulk);
 
     return 0;
 }
