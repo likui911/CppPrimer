@@ -115,5 +115,7 @@
         "cwctype": "cpp",
         "string_view": "cpp",
         "optional": "cpp"
-    }
+    },
+    "C_Cpp.intelliSenseEngineFallback": "Enabled",
+    "C_Cpp.errorSquiggles": "Disabled"
 }
