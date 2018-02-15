@@ -1,5 +1,6 @@
 #include <utility>
 #include <functional>
+#include <cstddef>
 /*
 编写你自己版本的shared_ptr和unique_ptr
 */
@@ -16,22 +17,45 @@ class default_delete
 };
 
 //////////////////shared_ptr implements///////////////////////
-template <typename T, typename D = default_delete<T>()>
+
+template <typename T>
+class shared_ptr;
+
+template <typename T>
+void swap(shared_ptr<T> &lhs, shared_ptr<T> &rhs) noexcept;
+
+template <typename T>
 class shared_ptr
 {
   public:
+    friend void swap<T>(shared_ptr<T> &lhs, shared_ptr<T> &rhs) noexcept;
+
     typedef T element_type;
 
     constexpr shared_ptr() noexcept = default;
 
-    shared_ptr(T *p, D del)
+    template <typename D>
+    shared_ptr(T *p, D del = default_delete<T>())
         : ptr(p), refCount(new std::size_t(1)), deleter(del)
     {
     }
 
-    shared_ptr(const shared_ptr &x) noexcept;
+    shared_ptr(const shared_ptr &x) noexcept
+        : ptr(x.ptr), refCount(x.refCount), deleter(x.deleter)
+    {
+        //If x is empty, an empty object is constructed
+        if (ptr != nullptr)
+        {
+            ++(*refCount);
+        }
+    }
 
-    shared_ptr(shared_ptr &&x) noexcept;
+    shared_ptr(shared_ptr &&x) noexcept
+        : ptr(x.ptr), refCount(x.refCount), deleter(x.deleter)
+    {
+        x.ptr = nullptr;
+        x.refCount = nullptr;
+    }
 
     ~shared_ptr()
     {
@@ -42,8 +66,11 @@ class shared_ptr
 
     shared_ptr &operator=(shared_ptr &&x) noexcept;
 
-    void swap(shared_ptr &x) noexcept;
-
+    void swap(shared_ptr &rhs) noexcept
+    {
+        ::swap(*this, rhs);
+    }
+    //todo all below
     void reset() noexcept;
 
     element_type *get() const noexcept;
@@ -61,13 +88,59 @@ class shared_ptr
   private:
     T *ptr;
     std::size_t *refCount;
-    D deleter;
+    std::function<void(T *)> deleter;
     //decrement the refCount,if refCount goes to zero ,delete ptr and refCount
     void decrement_delete();
 };
 
+template <typename T>
+inline shared_ptr<T> &shared_ptr<T>::operator=(const shared_ptr &rhs) noexcept
+{
+    //increment rhs.refCount first to ensure safty when self-assignment
+    ++*rhs.refCount;
+
+    decrement_delete();
+    ptr = rhs.ptr;
+    refCount = rhs.refCount;
+    deleter = rhs.deleter;
+
+    return *this;
+}
+
+template <typename T>
+shared_ptr<T> &shared_ptr<T>::operator=(shared_ptr &&rhs) noexcept
+{
+    decrement_delete();
+    ::swap(*this, rhs);
+    return *this;
+}
+
+template <typename T>
+void shared_ptr<T>::reset() noexcept
+{
+    //todo
+}
+
+template <typename T>
+void shared_ptr<T>::decrement_delete()
+{
+    --*refCount;
+    if (*refCount == 0)
+    {
+        deleter(ptr);
+        delete refCount;
+    }
+    refCount = nullptr;
+    ptr = nullptr;
+}
+
 template <class T>
-void swap(shared_ptr<T> &x, shared_ptr<T> &y) noexcept;
+void swap(shared_ptr<T> &lhs, shared_ptr<T> &rhs) noexcept
+{
+    std::swap(lhs.ptr, rhs.ptr);
+    std::swap(lhs.refCount, rhs.refCount);
+    std::swap(lhs.deleter, rhs.deleter);
+}
 
 template <class T, class... Args>
 shared_ptr<T> make_shared(Args &&... args);
