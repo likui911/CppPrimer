@@ -325,6 +325,12 @@ using namespace std;
 
 int main()
 {
+    //test shared_ptr
+    {
+        // todo
+    }
+    
+    //test unique_ptr
     {
         string *str = new string("abcd");
         {
