@@ -70,8 +70,13 @@ class shared_ptr
     {
         ::swap(*this, rhs);
     }
-    //todo all below
+
     void reset() noexcept;
+
+    void reset(T *);
+
+    template <typename D>
+    void reset(T *ptr, D d);
 
     element_type *get() const noexcept;
 
@@ -79,11 +84,20 @@ class shared_ptr
 
     element_type *operator->() const noexcept;
 
-    long int use_count() const noexcept;
+    std::size_t use_count() const noexcept
+    {
+        return *refCount;
+    }
 
-    bool unique() const noexcept;
+    bool unique() const noexcept
+    {
+        return *refCount == 1;
+    }
 
-    explicit operator bool() const noexcept;
+    explicit operator bool() const noexcept
+    {
+        return ptr ? true : false;
+    }
 
   private:
     T *ptr;
@@ -118,7 +132,41 @@ shared_ptr<T> &shared_ptr<T>::operator=(shared_ptr &&rhs) noexcept
 template <typename T>
 void shared_ptr<T>::reset() noexcept
 {
-    //todo
+    shared_ptr<T>().swap(*this);
+}
+
+template <typename T>
+void shared_ptr<T>::reset(T *p)
+{
+    shared_ptr<T>(p).swap(*this);
+}
+
+template <typename T>
+template <typename D>
+void shared_ptr<T>::reset(T *p, D d)
+{
+    shared_ptr<T>(p, d).swap(*this);
+}
+
+template <typename T>
+inline typename shared_ptr<T>::element_type *
+shared_ptr<T>::get() const noexcept
+{
+    return ptr;
+}
+
+template <typename T>
+inline typename shared_ptr<T>::element_type &
+    shared_ptr<T>::operator*() const noexcept
+{
+    return *ptr;
+}
+
+template <typename T>
+inline typename shared_ptr<T>::element_type *
+    shared_ptr<T>::operator->() const noexcept
+{
+    return ptr;
 }
 
 template <typename T>
@@ -142,6 +190,7 @@ void swap(shared_ptr<T> &lhs, shared_ptr<T> &rhs) noexcept
     std::swap(lhs.deleter, rhs.deleter);
 }
 
+//todo ---------------------------------
 template <class T, class... Args>
 shared_ptr<T> make_shared(Args &&... args);
 
