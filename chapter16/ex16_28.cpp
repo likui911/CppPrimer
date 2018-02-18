@@ -32,10 +32,12 @@ class shared_ptr
 
     typedef T element_type;
 
-    constexpr shared_ptr() noexcept = default;
+    constexpr shared_ptr() noexcept
+        : ptr(nullptr), refCount(new std::size_t(1)), deleter(default_delete<T>())
+    {
+    }
 
-    template <typename D>
-    shared_ptr(T *p, D del = default_delete<T>())
+    shared_ptr(T *p, std::function<void(T *)> del = default_delete<T>())
         : ptr(p), refCount(new std::size_t(1)), deleter(del)
     {
     }
@@ -190,10 +192,6 @@ void swap(shared_ptr<T> &lhs, shared_ptr<T> &rhs) noexcept
     std::swap(lhs.deleter, rhs.deleter);
 }
 
-//todo ---------------------------------
-template <class T, class... Args>
-shared_ptr<T> make_shared(Args &&... args);
-
 //////////////////unique_ptr implements///////////////////////
 
 //forward declarations for friendship
@@ -327,9 +325,18 @@ int main()
 {
     //test shared_ptr
     {
-        // todo
+        string *str = new string("abcd");
+        ::shared_ptr<string> sptr(str);
+        {
+            shared_ptr<string> sptr1(sptr);
+            cout << sptr.use_count() << endl;
+            sptr1.reset();
+            cout << sptr.use_count() << endl;
+            sptr.reset();
+        }
+        cout << sptr.use_count() << endl;
     }
-    
+
     //test unique_ptr
     {
         string *str = new string("abcd");
